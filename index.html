@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Chamadas Escolares</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Login Page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .login-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .login-box button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Main Layout */
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-tabs li {
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-tabs button {
+            width: 100%;
+            padding: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-tabs button:hover {
+            background-color: #f8f9fa;
+        }
+
+        .nav-tabs button.active {
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .present {
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+
+        .absent {
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        /* Stats */
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .stat-card {
+                min-width: 100%;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-3 {
+            margin-top: 15px;
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        /* Custom Checkbox */
+        .checkbox-container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            user-select: none;
+        }
+
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .checkbox-container:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--success-color);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Alert */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+        }
+
+        .alert-success {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-left: 4px solid var(--success-color);
+            color: #27ae60;
+        }
+
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-left: 4px solid var(--accent-color);
+            color: #c0392b;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Section -->
+    <div id="login-page" class="login-container">
+        <div class="login-box">
+            <h2>Sistema de Chamadas</h2>
+            <div class="form-group">
+                <input type="text" id="login" placeholder="Usuário" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="password" id="senha" placeholder="Senha" class="form-control">
+            </div>
+            <button onclick="fazerLogin()" class="btn">Entrar</button>
+            <div id="login-error" class="alert alert-danger mt-3 hidden"></div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app" class="hidden">
+        <header>
+            <div class="container header-content">
+                <div class="logo">Sistema de Chamadas</div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </header>
+
+        <main class="container">
+            <nav>
+                <ul class="nav-tabs">
+                    <li>
+                        <button class="active" onclick="mostrarSecao('cadastro-alunos')">Cadastrar Alunos</button>
+                    </li>
+                    <li>
+                        <button onclick="mostrarSecao('fazer-chamada')">Fazer Chamada</button>
+                    </li>
+                    <li>
+                        <button onclick="mostrarSecao('estatisticas')">Estatísticas</button>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Cadastro de Alunos -->
+            <section id="cadastro-alunos" class="content-section active">
+                <h2 class="section-title">Cadastrar Alunos</h2>
+                <div class="form-group">
+                    <label for="nome-aluno">Nome do Aluno</label>
+                    <input type="text" id="nome-aluno" class="form-control" placeholder="Digite o nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="matricula-aluno">Matrícula</label>
+                    <input type="text" id="matricula-aluno" class="form-control" placeholder="Digite a matrícula">
+                </div>
+                <div class="form-group">
+                    <label for="turma-aluno">Turma</label>
+                    <select id="turma-aluno" class="form-control">
+                        <option value="1A">1º Ano A</option>
+                        <option value="1B">1º Ano B</option>
+                        <option value="1C">1º Ano C</option>
+                        <option value="1D">1º Ano D</option>
+                        <option value="1E">1º Ano E</option>
+                        <option value="2A">2º Ano A</option>
+                        <option value="2B">2º Ano B</option>
+                        <option value="2C">2º Ano C</option>
+                        <option value="2D">2º Ano D</option>
+                        <option value="2E">2º Ano E</option>
+                        <option value="3A">3º Ano A</option>
+                        <option value="3B">3º Ano B</option>
+                        <option value="3C">3º Ano C</option>
+                    </select>
+                </div>
+                <button onclick="cadastrarAluno()" class="btn btn-success">Cadastrar Aluno</button>
+                <div id="cadastro-success" class="alert alert-success mt-3 hidden">Aluno cadastrado com sucesso!</div>
+                <div id="cadastro-error" class="alert alert-danger mt-3 hidden"></div>
+
+                <h3 class="mt-3">Alunos Cadastrados</h3>
+                <div class="table-responsive">
+                    <table id="tabela-alunos">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Matrícula</th>
+                                <th>Turma</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-alunos">
+                            <!-- Alunos serão carregados aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Fazer Chamada -->
+            <section id="fazer-chamada" class="content-section">
+                <h2 class="section-title">Fazer Chamada</h2>
+                <div class="form-group">
+                    <label for="turma-chamada">Selecione a Turma</label>
+                    <select id="turma-chamada" class="form-control" onchange="carregarAlunosParaChamada()">
+                        <option value="">Selecione uma turma</option>
+                        <option value="1A">1º Ano A</option>
+                        <option value="1B">1º Ano B</option>
+                        <option value="1C">1º Ano C</option>
+                        <option value="1D">1º Ano D</option>
+                        <option value="1E">1º Ano E</option>
+                        <option value="2A">2º Ano A</option>
+                        <option value="2B">2º Ano B</option>
+                        <option value="2C">2º Ano C</option>
+                        <option value="2D">2º Ano D</option>
+                        <option value="2E">2º Ano E</option>
+                        <option value="3A">3º Ano A</option>
+                        <option value="3B">3º Ano B</option>
+                        <option value="3C">3º Ano C</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="data-chamada">Data da Chamada</label>
+                    <input type="date" id="data-chamada" class="form-control">
+                </div>
+
+                <div id="lista-chamada-container" class="hidden">
+                    <h3>Lista de Alunos</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Matrícula</th>
+                                    <th>Presença</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-chamada">
+                                <!-- Alunos para chamada serão carregados aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button onclick="salvarChamada()" class="btn btn-success mt-3">Salvar Chamada</button>
+                    <div id="chamada-success" class="alert alert-success mt-3 hidden">Chamada registrada com sucesso!</div>
+                    <div id="chamada-error" class="alert alert-danger mt-3 hidden"></div>
+                </div>
+            </section>
+
+            <!-- Estatísticas -->
+            <section id="estatisticas" class="content-section">
+                <h2 class="section-title">Estatísticas de Presença</h2>
+                <div class="form-group">
+                    <label for="turma-estatistica">Selecione a Turma</label>
+                    <select id="turma-estatistica" class="form-control" onchange="calcularEstatisticas()">
+                        <option value="">Selecione uma turma</option>
+                        <option value="1A">1º Ano A</option>
+                        <option value="1B">1º Ano B</option>
+                        <option value="1C">1º Ano C</option>
+                        <option value="1D">1º Ano D</option>
+                        <option value="1E">1º Ano E</option>
+                        <option value="2A">2º Ano A</option>
+                        <option value="2B">2º Ano B</option>
+                        <option value="2C">2º Ano C</option>
+                        <option value="2D">2º Ano D</option>
+                        <option value="2E">2º Ano E</option>
+                        <option value="3A">3º Ano A</option>
+                        <option value="3B">3º Ano B</option>
+                        <option value="3C">3º Ano C</option>
+                    </select>
+                </div>
+
+                <div id="periodo-estatisticas" class="form-group hidden">
+                    <label>Período</label>
+                    <div>
+                        <button onclick="filtrarEstatisticas('semana')" class="btn">Última Semana</button>
+                        <button onclick="filtrarEstatisticas('mes')" class="btn">Último Mês</button>
+                        <button onclick="filtrarEstatisticas('todos')" class="btn">Todos</button>
+                    </div>
+                </div>
+
+                <div id="estatisticas-container" class="hidden">
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-label">Turma</div>
+                            <div id="turma-selecionada" class="stat-value">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Presença Média</div>
+                            <div id="presenca-media" class="stat-value">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total de Alunos</div>
+                            <div id="total-alunos" class="stat-value">-</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total de Chamadas</div>
+                            <div id="total-chamadas" class="stat-value">-</div>
+                        </div>
+                    </div>
+
+                    <h3>Desempenho Individual</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Aluno</th>
+                                    <th>Matrícula</th>
+                                    <th>Presenças</th>
+                                    <th>Faltas</th>
+                                    <th>Percentual</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dados-estatisticas">
+                                <!-- Dados estatísticos serão carregados aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="mt-3">Histórico de Chamadas</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Presentes</th>
+                                    <th>Ausentes</th>
+                                    <th>Percentual</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historico-chamadas">
+                                <!-- Histórico será carregado aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            2025 | Programado por Gabriel
+        </footer>
+    </div>
+
+    <script>
+        // Constantes
+        const LS_ALUNOS = "alunos";
+        const LS_CHAMADAS = "chamadas";
+        const LS_USUARIO = "usuario_logado";
+        const LOGIN_CORRETO = "admin25";
+        const SENHA_CORRETA = "NicotaADM2025";
+
+        // Elementos do DOM
+        const loginPage = document.getElementById("login-page");
+        const app = document.getElementById("app");
+        const loginError = document.getElementById("login-error");
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarLogin();
+            carregarDados();
+        });
+
+        // Funções de Login
+        function verificarLogin() {
+            const usuarioLogado = localStorage.getItem(LS_USUARIO);
+            if (usuarioLogado === "true") {
+                loginPage.classList.add("hidden");
+                app.classList.remove("hidden");
+            }
+        }
+
+        function fazerLogin() {
+            const login = document.getElementById("login").value;
+            const senha = document.getElementById("senha").value;
+
+            if (login === LOGIN_CORRETO && senha === SENHA_CORRETA) {
+                localStorage.setItem(LS_USUARIO, "true");
+                loginPage.classList.add("hidden");
+                app.classList.remove("hidden");
+                loginError.classList.add("hidden");
+            } else {
+                loginError.textContent = "Usuário ou senha incorretos!";
+                loginError.classList.remove("hidden");
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem(LS_USUARIO);
+            app.classList.add("hidden");
+            loginPage.classList.remove("hidden");
+            document.getElementById("login").value = "";
+            document.getElementById("senha").value = "";
+        }
+
+        // Funções de Navegação
+        function mostrarSecao(secaoId) {
+            // Esconder todas as seções
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+
+            // Mostrar a seção selecionada
+            document.getElementById(secaoId).classList.add('active');
+
+            // Atualizar a navegação
+            document.querySelectorAll('.nav-tabs button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Atualizar dados se necessário
+            if (secaoId === 'cadastro-alunos') {
+                atualizarListaAlunos();
+            } else if (secaoId === 'estatisticas') {
+                document.getElementById('periodo-estatisticas').classList.add('hidden');
+                document.getElementById('estatisticas-container').classList.add('hidden');
+            }
+        }
+
+        // Funções de Alunos
+        function carregarDados() {
+            if (!localStorage.getItem(LS_ALUNOS)) {
+                localStorage.setItem(LS_ALUNOS, JSON.stringify([]));
+            }
+            if (!localStorage.getItem(LS_CHAMADAS)) {
+                localStorage.setItem(LS_CHAMADAS, JSON.stringify([]));
+            }
+        }
+
+        function cadastrarAluno() {
+            const nome = document.getElementById("nome-aluno").value.trim();
+            const matricula = document.getElementById("matricula-aluno").value.trim();
+            const turma = document.getElementById("turma-aluno").value;
+
+            // Validação
+            if (!nome || !matricula || !turma) {
+                mostrarErroCadastro("Preencha todos os campos!");
+                return;
+            }
+
+            const alunos = JSON.parse(localStorage.getItem(LS_ALUNOS));
+            
+            // Verificar se matrícula já existe
+            if (alunos.some(aluno => aluno.matricula === matricula)) {
+                mostrarErroCadastro("Matrícula já cadastrada!");
+                return;
+            }
+
+            // Adicionar novo aluno
+            alunos.push({ nome, matricula, turma });
+            localStorage.setItem(LS_ALUNOS, JSON.stringify(alunos));
+
+            // Limpar campos e mostrar sucesso
+            document.getElementById("nome-aluno").value = "";
+            document.getElementById("matricula-aluno").value = "";
+            document.getElementById("cadastro-error").classList.add("hidden");
+            document.getElementById("cadastro-success").classList.remove("hidden");
+            
+            // Atualizar lista
+            atualizarListaAlunos();
+
+            // Esconder mensagem de sucesso após 3 segundos
+            setTimeout(() => {
+                document.getElementById("cadastro-success").classList.add("hidden");
+            }, 3000);
+        }
+
+        function mostrarErroCadastro(mensagem) {
+            const erroElement = document.getElementById("cadastro-error");
+            erroElement.textContent = mensagem;
+            erroElement.classList.remove("hidden");
+            document.getElementById("cadastro-success").classList.add("hidden");
+        }
+
+        function atualizarListaAlunos() {
+            const alunos = JSON.parse(localStorage.getItem(LS_ALUNOS));
+            const listaAlunos = document.getElementById("lista-alunos");
+            listaAlunos.innerHTML = "";
+
+            if (alunos.length === 0) {
+                listaAlunos.innerHTML = '<tr><td colspan="4" class="text-center">Nenhum aluno cadastrado</td></tr>';
+                return;
+            }
+
+            alunos.forEach((aluno, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${aluno.nome}</td>
+                    <td>${aluno.matricula}</td>
+                    <td>${formatarTurma(aluno.turma)}</td>
+                    <td>
+                        <button onclick="removerAluno(${index})" class="btn btn-danger">Remover</button>
+                    </td>
+                `;
+                listaAlunos.appendChild(row);
+            });
+        }
+
+        function formatarTurma(turma) {
+            const ano = turma.charAt(0);
+            const classe = turma.charAt(1).toUpperCase();
+            return `${ano}º Ano ${classe}`;
+        }
+
+        function removerAluno(index) {
+            if (!confirm("Tem certeza que deseja remover este aluno?")) return;
+
+            const alunos = JSON.parse(localStorage.getItem(LS_ALUNOS));
+            alunos.splice(index, 1);
+            localStorage.setItem(LS_ALUNOS, JSON.stringify(alunos));
+            atualizarListaAlunos();
+        }
+
+        // Funções de Chamada
+        function carregarAlunosParaChamada() {
+            const turmaSelecionada = document.getElementById("turma-chamada").value;
+            const listaChamadaContainer = document.getElementById("lista-chamada-container");
+            
+            if (!turmaSelecionada) {
+                listaChamadaContainer.classList.add("hidden");
+                return;
+            }
+
+            // Definir data atual como padrão
+            const hoje = new Date();
+            document.getElementById("data-chamada").valueAsDate = hoje;
+
+            const alunos = JSON.parse(localStorage.getItem(LS_ALUNOS));
+            const alunosTurma = alunos.filter(aluno => aluno.turma === turmaSelecionada);
+            const listaChamada = document.getElementById("lista-chamada");
+            listaChamada.innerHTML = "";
+
+            if (alunosTurma.length === 0) {
+                listaChamada.innerHTML = '<tr><td colspan="3" class="text-center">Nenhum aluno cadastrado nesta turma</td></tr>';
+                listaChamadaContainer.classList.remove("hidden");
+                return;
+            }
+
+            alunosTurma.forEach(aluno => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${aluno.nome}</td>
+                    <td>${aluno.matricula}</td>
+                    <td>
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="presenca-${aluno.matricula}" checked>
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                `;
+                listaChamada.appendChild(row);
+            });
+
+            listaChamadaContainer.classList.remove("hidden");
+            document.getElementById("chamada-success").classList.add("hidden");
+            document.getElementById("chamada-error").classList.add("hidden");
+        }
+
+        function salvarChamada() {
+            const turma = document.getElementById("turma-chamada").value;
+            const dataInput = document.getElementById("data-chamada").value;
+            const alunos = JSON.parse(localStorage.getItem(LS_ALUNOS));
+            const alunosTurma = alunos.filter(aluno => aluno.turma === turma);
+
+            if (!dataInput) {
+                mostrarErroChamada("Selecione uma data!");
+                return;
+            }
+
+            const data = new Date(dataInput);
+            const dataFormatada = formatarData(data);
+
+            // Verificar se já existe chamada para esta turma na data selecionada
+            const chamadas = JSON.parse(localStorage.getItem(LS_CHAMADAS));
+            const chamadaExistente = chamadas.find(chamada => 
+                chamada.turma === turma && chamada.data === dataFormatada
+            );
+
+            if (chamadaExistente) {
+                if (!confirm("Já existe uma chamada para esta turma nesta data. Deseja sobrescrever?")) {
+                    return;
+                }
+                // Remover a chamada existente
+                const index = chamadas.indexOf(chamadaExistente);
+                chamadas.splice(index, 1);
+            }
+
+            const presentes = [];
+            const ausentes = [];
+
+            alunosTurma.forEach(aluno => {
+                const checkbox = document.getElementById(`presenca-${aluno.matricula}`);
+                if (checkbox.checked) {
+                    presentes.push(aluno.matricula);
+                } else {
+                    ausentes.push(aluno.matricula);
+                }
+            });
+
+            // Adicionar nova chamada
+            chamadas.push({
+                data: dataFormatada,
+                turma: turma,
+                presentes: presentes,
+                ausentes: ausentes
+            });
+
+            localStorage.setItem(LS_CHAMADAS, JSON.stringify(chamadas));
+            mostrarSucessoChamada("Chamada registrada com sucesso!");
+        }
+
+        function formatarData(data) {
+            const dia = String(data.getDate()).padStart(2, '0');
+            const mes = String(data.getMonth() + 1).padStart(2, '0');
+            const ano = data.getFullYear();
+            return `${dia}/${mes}/${ano}`;
+        }
+
+        function mostrarSucessoChamada(mensagem) {
+            const successElement = document.getElementById("chamada-success");
+            successElement.textContent = mensagem;
+            successElement.classList.remove("hidden");
+            document.getElementById("chamada-error").classList.add("hidden");
+            
+            setTimeout(() => {
+                successElement.classList.add("hidden");
+            }, 3000);
+        }
+
+        function mostrarErroChamada(mensagem) {
+            const erroElement = document.getElementById("chamada-error");
+            erroElement.textContent = mensagem;
+            erroElement.classList.remove("hidden");
+            document.getElementById("chamada-success").classList.add("hidden");
+        }
+
+        // Funções de Estatísticas
+        function calcularEstatisticas() {
+            const turmaSelecionada = document.getElementById("turma-estatistica").value;
+            const periodoEstatisticas = document.getElementById("periodo-estatisticas");
+            const estatisticasContainer = document.getElementById("estatisticas-container");
+            
+            if (!turmaSelecionada) {
+                periodoEstatisticas.classList.add("hidden");
+                estatisticasContainer.classList.add("hidden");
+                return;
+            }
+
+            periodoEstatisticas.classList.remove("hidden");
+            estatisticasContainer.classList.remove("hidden");
+            
+            // Mostrar nome da turma formatado
+            document.getElementById("turma-selecionada").textContent = formatarTurma(turmaSelecionada);
+            
+            // Calcular estatísticas para o mês (padrão)
+            filtrarEstatisticas('mes');
+        }
+
+        function filtrarEstatisticas(periodo) {
+            const turmaSelecionada = document.getElementById("turma-estatistica").value;
+            const alunos = JSON.parse(localStorage.getItem(LS_ALUNOS));
+            const chamadas = JSON.parse(localStorage.getItem(LS_CHAMADAS));
+            
+            const alunosTurma = alunos.filter(aluno => aluno.turma === turmaSelecionada);
+            let chamadasTurma = chamadas.filter(chamada => chamada.turma === turmaSelecionada);
+            
+            // Filtrar por período
+            const hoje = new Date();
+            if (periodo === 'semana') {
+                const umaSemanaAtras = new Date(hoje);
+                umaSemanaAtras.setDate(hoje.getDate() - 7);
+                chamadasTurma = chamadasTurma.filter(chamada => {
+                    const [dia, mes, ano] = chamada.data.split('/');
+                    const dataChamada = new Date(ano, mes - 1, dia);
+                    return dataChamada >= umaSemanaAtras;
+                });
+            } else if (periodo === 'mes') {
+                const umMesAtras = new Date(hoje);
+                umMesAtras.setMonth(hoje.getMonth() - 1);
+                chamadasTurma = chamadasTurma.filter(chamada => {
+                    const [dia, mes, ano] = chamada.data.split('/');
+                    const dataChamada = new Date(ano, mes - 1, dia);
+                    return dataChamada >= umMesAtras;
+                });
+            }
+            // 'todos' não precisa de filtro
+
+            // Atualizar totais
+            document.getElementById("total-alunos").textContent = alunosTurma.length;
+            document.getElementById("total-chamadas").textContent = chamadasTurma.length;
+
+            // Calcular presença média da turma
+            let totalPresencasTurma = 0;
+            chamadasTurma.forEach(chamada => {
+                totalPresencasTurma += chamada.presentes.length;
+            });
+            const presencaMediaTurma = chamadasTurma.length > 0 ? 
+                (totalPresencasTurma / (alunosTurma.length * chamadasTurma.length)) * 100 : 0;
+            document.getElementById("presenca-media").textContent = presencaMediaTurma.toFixed(2) + '%';
+
+            // Calcular estatísticas por aluno
+            const dadosEstatisticas = document.getElementById("dados-estatisticas");
+            dadosEstatisticas.innerHTML = "";
+
+            alunosTurma.forEach(aluno => {
+                let presencas = 0;
+                let faltas = 0;
+                
+                chamadasTurma.forEach(chamada => {
+                    if (chamada.presentes.includes(aluno.matricula)) {
+                        presencas++;
+                    } else if (chamada.ausentes.includes(aluno.matricula)) {
+                        faltas++;
+                    }
+                });
+
+                const total = presencas + faltas;
+                const percentual = total > 0 ? (presencas / total) * 100 : 0;
+                const status = percentual >= 75 ? 'Aprovado' : 'Reprovado';
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${aluno.nome}</td>
+                    <td>${aluno.matricula}</td>
+                    <td>${presencas}</td>
+                    <td>${faltas}</td>
+                    <td>${percentual.toFixed(2)}%</td>
+                    <td>${status}</td>
+                `;
+                dadosEstatisticas.appendChild(row);
+            });
+
+            // Mostrar histórico de chamadas
+            const historicoChamadas = document.getElementById("historico-chamadas");
+            historicoChamadas.innerHTML = "";
+
+            chamadasTurma.forEach(chamada => {
+                const totalAlunos = chamada.presentes.length + chamada.ausentes.length;
+                const percentual = (chamada.presentes.length / totalAlunos) * 100;
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${chamada.data}</td>
+                    <td>${chamada.presentes.length}</td>
+                    <td>${chamada.ausentes.length}</td>
+                    <td>${percentual.toFixed(2)}%</td>
+                `;
+                historicoChamadas.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
